@@ -1,31 +1,26 @@
 const express = require('express')
 const session = require('express-session')
 const logger = require('morgan')
-const createError = require('http-errors')
-const errorhandler = require('errorhandler')
-const { sessConfig, appConfig } = require('./helpers/config')
-
 const router = require('./routes/routes')
+const { notFound, serverError } = require('./middleware/error')
+const { SESSION_OPTIONS } = require('./config')
 
-const app = express()
+const createApp = (store) => {
+  const app = express()
 
-app.set('port', appConfig.port)
-app.set('env')
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+  app.disable('x-powered-by')
 
-app.use(session(sessConfig))
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: false }))
 
-app.use(router)
+  app.use(session({ ...SESSION_OPTIONS, store }))
 
-app.use(logger('dev'))
-app.use((req, res, next) => next(createError(404)))
-app.use(
-  errorhandler({
-    log: (err, str, req) => {
-      let _title = `Error in ${req.method} ${req.url}`
-      console.error(`${_title}\n${err}`)
-    },
-  })
-)
-module.exports = app
+  app.use(router)
+
+  app.use(logger('dev'))
+  app.use(notFound)
+  app.use(serverError)
+
+  return app
+}
+module.exports = createApp
