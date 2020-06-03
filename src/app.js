@@ -1,7 +1,9 @@
 const express = require('express')
 const session = require('express-session')
+
 const logger = require('morgan')
 const path = require('path')
+const flash = require('connect-flash')
 const exphbs = require('express-handlebars')
 const compression = require('compression')
 const router = require('./routes/routes')
@@ -29,8 +31,15 @@ const createApp = (store) => {
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
-
   app.use(session({ ...SESSION_OPTIONS, store }))
+
+  app.use(flash())
+  // app.use((req, res, next) => {
+  //   res.locals.success_msg = req.flash('success_msg')
+  //   res.locals.error_msg = req.flash('error_msg')
+  //   res.locals.email = req.flash('email')
+  //   next()
+  // })
 
   app.use(router)
 

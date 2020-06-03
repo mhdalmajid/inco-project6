@@ -5,7 +5,7 @@ const connectRedis = require('connect-redis')
 const createApp = require('./src/app')
 const { REDIS_OPTIONS, MONGO_URI, MONGO_OPTIONS, APP_PORT } = require('./src/config')
 
-connect('mongodb://localhost/project6', MONGO_OPTIONS)
+connect(MONGO_URI, MONGO_OPTIONS)
   .then(() => {
     /** *****************
      * Redis Initializer

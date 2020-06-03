@@ -1,7 +1,16 @@
-const express = require('express')
+const { loginUserValidate } = require('../helpers/validator')
 
-const route = express.Router()
+const login = async (req, res) => {
+  res.render('login', { success_msg: req.flash('success_msg') })
+}
 
-route.get('/', async (req, res) => res.render('index'))
+const loginPost = async (req, res) => {
+  const { email, password } = req.body
+  const errors = await loginUserValidate({ email, password })
 
-module.exports = route
+  if (errors.length > 0) return res.render('login', { errors })
+
+  res.render('login')
+}
+
+module.exports = { login, loginPost }

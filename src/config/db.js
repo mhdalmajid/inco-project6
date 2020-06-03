@@ -9,11 +9,13 @@ const {
 // const MONGO_URI = `mongodb+srv://root:<password>@cluster0-tdzoc.mongodb.net/test?retryWrites=true&w=majority`
 // const MONGO_URI = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}/${MONGO_DATABASE}?retryWrites=true&w=majority`
 // const MONGO_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`
+// 'mongodb://localhost/project6'
 const MONGO_URI = `mongodb://localhost/${MONGO_DATABASE}`
 
 const MONGO_OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 }
 
 module.exports = { MONGO_URI, MONGO_OPTIONS }

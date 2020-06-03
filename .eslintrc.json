@@ -24,6 +24,7 @@
         "pattern": "^_"
       }
     ],
+    "consistent-return": "off",
     "import/no-extraneous-dependencies": "off",
     "no-underscore-dangle": "off",
     "func-names": "off",

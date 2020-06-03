@@ -1,10 +1,15 @@
 const express = require('express')
-const login = require('./login')
+const { login, loginPost } = require('./login')
+const { register, registerPost } = require('./register')
 
 const route = express.Router()
 
 route.get('/', async (req, res) => res.render('index'))
 
-route.get('/login', async (req, res) => res.render('login'))
-route.get('/register', async (req, res) => res.render('register'))
+route.get('/login', login)
+route.post('/login', loginPost)
+
+route.get('/register', register)
+route.post('/register', registerPost)
+
 module.exports = route
