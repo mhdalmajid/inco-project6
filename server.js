@@ -14,6 +14,10 @@ connect(MONGO_URI, MONGO_OPTIONS)
      */
     const RedisStore = connectRedis(session)
     const redisClient = createClient()
+
+    redisClient.on('connect', () => console.log('Connected to Redis'))
+    redisClient.on('error', (err) => console.log(`Redis error: ${err}`))
+
     const store = new RedisStore({ ...REDIS_OPTIONS, client: redisClient })
 
     /** *****************
@@ -23,6 +27,8 @@ connect(MONGO_URI, MONGO_OPTIONS)
      */
     const app = createApp(store)
 
-    app.listen(APP_PORT, () => console.log(`🚀🚀 At 👉 http://localhost:${APP_PORT} `))
+    app.listen(APP_PORT, () =>
+      console.log(`Server running 🚀🚀 At 👉 http://localhost:${APP_PORT} `)
+    )
   })
   .catch((err) => console.error(err))

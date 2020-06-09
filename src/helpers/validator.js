@@ -15,19 +15,13 @@ const newUserValidate = async ({ name, email, password, confirmPassword }) => {
   return error
 }
 
-const loginUserValidate = async ({ email, password }) => {
-  const error = []
+const loginValidate = async ({ email, password }) => {
+  const errors = []
 
-  if (!isEmail(email)) error.push({ msg: 'email address incorrect' })
-  if (isEmpty(password)) error.push({ msg: 'password must not be empty' })
+  if (!isEmail(email)) errors.push({ msg: 'email address should be a valid email' })
+  if (isEmpty(password)) errors.push({ msg: 'password must not be empty' })
 
-  const User = await UserModel.findOne({ email })
-
-  if (User) {
-    if (!(await User.matchesPassword(password))) error.push({ msg: 'invalide Password' })
-  } else error.push({ msg: 'invalide Email or Password' })
-
-  return error
+  return errors
 }
 
-module.exports = { newUserValidate, loginUserValidate }
+module.exports = { newUserValidate, loginValidate }

@@ -1,15 +1,24 @@
 const express = require('express')
+const logOut = require('./logOut')
+const index = require('./main')
 const { login, loginPost } = require('./login')
+const { ensureAuthenticated, forwardAuthenticated } = require('../auth/passport')
 const { register, registerPost } = require('./register')
+const location = require('./location')
 
-const route = express.Router()
+const router = express.Router()
 
-route.get('/', async (req, res) => res.render('index'))
+router.get('/', index)
 
-route.get('/login', login)
-route.post('/login', loginPost)
+router.get('/login', forwardAuthenticated, login)
+router.post('/login', loginPost)
 
-route.get('/register', register)
-route.post('/register', registerPost)
+router.get('/register', register)
+router.post('/register', registerPost)
 
-module.exports = route
+// Logout
+router.get('/logout', ensureAuthenticated, logOut)
+
+router.use('/location', location)
+
+module.exports = router
