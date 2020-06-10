@@ -1,5 +1,9 @@
+const LocationModel = require('../models/location')
+
 const index = async (req, res) => {
-  res.render('index', { user: req.user })
+  const locations = await LocationModel.find({ approved: true })
+
+  res.render('index', { locations, user: req.user })
 }
 
 module.exports = index

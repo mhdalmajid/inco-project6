@@ -1,0 +1,187 @@
+.cards_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 50px auto;
+  grid-gap: 100px 40px;
+}
+.movie_card {
+  height: 500px;
+  background: #000;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.movie_card_content {
+  widows: 100%;
+  height: 100%;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+}
+.movie_card::before {
+  background-color: #212122;
+  opacity: 0;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+}
+.movie_card_content,
+.movie_card::before {
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+}
+.movie_header,
+.movie_card_content p {
+  transition: all 0.3s ease-in-out;
+}
+.movie_card:hover::before,
+.movie_card_content:hover {
+  opacity: 0.9;
+}
+.movie_card:hover {
+  animation: headScale 0.2s ease-in forwards;
+}
+.movie_card_content > * {
+  z-index: 100;
+}
+.movie_header {
+  height: 200px;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 20px;
+}
+.movie_card_content:hover > .movie_header {
+  padding-top: 70px;
+}
+.movie_card_content:hover > p {
+  margin-top: 30px;
+}
+.movie_header > h3 {
+  text-align: center;
+}
+.movie_header > span {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+.movie_card_content p {
+  margin-top: 300px;
+  padding: 26px;
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 186px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.movie_card_content > a {
+  display: block;
+  margin: 40px auto;
+  color: #fefefe;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  height: 200px;
+}
+
+@media only screen and (max-width: 1189.8px) {
+  .cards_container {
+    display: grid;
+    margin: 100px auto;
+    grid-gap: 100px 40px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .movie_card {
+    height: 700px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .cards_container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.moviePage {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 900px;
+  margin: 100px auto;
+  background: #ffffff;
+  box-shadow: 0 2px 10px #222222;
+}
+
+.img_wapper {
+  width: 100%;
+  display: block;
+}
+.img_wapper img {
+  width: 100%;
+}
+
+.movie_details {
+  padding: 10px;
+  text-align: center;
+}
+
+.movie_action {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-size: 3rem;
+}
+.movie_action_span {
+  cursor: pointer;
+}
+.movie_action span {
+  margin: 20px 20px 0;
+}
+.movie_action_likes {
+  font-size: 1.8rem;
+  padding-top: 20px;
+}
+.movie_action_span:hover {
+  color: #c44685;
+}
+
+.comment_textarea {
+  width: 100%;
+}
+
+/* .movie_comments {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+} */
+.comment {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  /* box-shadow: 0 1px 2px #222222; */
+}
+
+.avatar a {
+  background: #efefef;
+  display: inline-block;
+  padding: 10px 10px 10px;
+  border-radius: 10px;
+  font-size: 1.4rem;
+}
+.comment p {
+  padding: 10px 10px 10px;
+  font-size: 1.4rem;
+}
+
+.rated {
+  color: #c44685;
+}

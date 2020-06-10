@@ -53,4 +53,11 @@ const forwardAuthenticated = (req, res, next) => {
   res.redirect('/')
 }
 
-module.exports = { passportConfig, ensureAuthenticated, forwardAuthenticated }
+const adminProtection = async (req, res, next) => {
+  if (req.isAuthenticated() && req.user.isAdmin) return next()
+
+  req.flash('error_msg', 'Please log in to view that resource')
+  res.redirect('/login')
+}
+
+module.exports = { passportConfig, ensureAuthenticated, forwardAuthenticated, adminProtection }

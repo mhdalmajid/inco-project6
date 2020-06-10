@@ -1,0 +1,59 @@
+<div class=" moviePage">
+    <div class="img_wapper">
+        <img src="/uploads/{{location.fileName}}" />
+    </div>
+    <div class="movie_details">
+        <h1>{{location.name}}</h1>
+        <p class="description">{{location.description}}</p>
+    </div>
+    <div class="movie_action">
+        {{#if  user}}
+        <span class="movie_action_span {{#if myRate}} rated {{/if}} " id="heart_btn" data-locationId="{{location._id}}"
+            data-Id="{{user._id}}"><i class=" fa fa-heart fa-6" aria-hidden="true"></i></span>
+        {{/if}}
+        <span class="movie_action_likes">{{count}} likes</span>
+        {{!-- <span><i class="fa fa-comment fa-6"></i></span> --}}
+    </div>
+    <div class="movie_comments">
+        <div class="row mt-10">
+            <div class="col-md-10 m-auto">
+                {{#if comments}}
+                {{#each comments}}
+                <div class="comment">
+                    <div class="avatar">
+                        <a href="/profile/{{userId._id}}">{{userId.name}}</a>
+                    </div>
+                    <p> {{comment}}</p>
+                </div>
+                {{/each}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="movie_comment_field">
+        <div class="row mt-10">
+            <div class="col-md-10 m-auto">
+                <div class="card card-body">
+                    {{>message}}
+                    <form action="/comment" method="POST" id="commentForm">
+                        <div class="form-group">
+                            <textarea class="comment_textarea" name="comment" id="" cols="30" rows="5"
+                                placeholder="Enter comment" {{#unless  user}}disabled="disabled"
+                                {{/unless }}></textarea>
+                        </div>
+                        <input type="hidden" name="userId" value="{{user._id}}">
+                        <input type="hidden" name="locationId" value="{{location._id}}">
+                        <button type="submit" class="btn btn-primary btn-block" {{#unless  user}} disabled="disabled"
+                            {{/unless }}>comment</button>
+                    </form>
+                    {{#unless  user}}
+                    <p class="lead mt-4">
+                        No Account? <a href="/register">Register to comment</a>
+                    </p>
+                    {{/unless }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

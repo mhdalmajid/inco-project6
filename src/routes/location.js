@@ -1,41 +1,49 @@
 const express = require('express')
-const path = require('path')
-const fs = require('fs')
-const multer = require('multer')
+const { isEmpty, isUndefined } = require('validator')
+const upload = require('../config/multer')
+const LocationModel = require('../models/location')
 
 const router = express.Router()
 
-const upload = multer({
-  dest: '/temp',
-})
-
 const location = (req, res) => {
-  res.render('locationForm')
+  res.render('locationForm', { user: req.user })
 }
 
-const locationPost = (req, res) => {
-  res.send(req.file)
+const locationPost = async (req, res, next) => {
+  upload(req, res, async (err) => {
+    const { name, description } = req.body
+
+    if (isEmpty(req.body.name) || isEmpty(req.body.name) || req.file === undefined)
+      return res.render('locationForm', {
+        error_msg: 'all fields are required',
+      })
+
+    if (err)
+      return res.render('locationForm', {
+        error_msg: 'Oops! something went wrong! ',
+      })
+
+    const isNameExist = await LocationModel.findOne({ name })
+
+    if (isNameExist)
+      return res.render('locationForm', {
+        error_msg: 'location name already exists',
+        user: req.user,
+      })
+
+    const newLocation = new LocationModel({ name, description, fileName: req.file.filename })
+
+    const save = await newLocation.save()
+
+    return res.render('locationForm', {
+      success_msg: 'File Uploaded!',
+      file: `uploads/${req.file.filename}`,
+      user: req.user,
+    })
+  })
 }
-
-// const locationPost = (req, res) => {
-//     const tempPath = req.file.path
-//     const targetPath = path.join(__dirname, './uploads/image.png')
-
-//     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
-//       fs.rename(tempPath, targetPath, (err) => {
-//         if (err) return 'error'
-
-//         res.status(200).contentType('text/plain').end('File uploaded!')
-//       })
-//     } else {
-//       fs.unlink(tempPath, (err) => {
-//         if (err) return 'error'
-
-//         res.status(403).contentType('text/plain').end('Only .png files are allowed!')
-//       })
-//     }
-//   }
 
 router.get('/', location)
-router.post('/', upload.single('file'), locationPost)
+router.post('/', locationPost)
+
 module.exports = router
