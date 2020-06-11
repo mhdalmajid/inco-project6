@@ -14,7 +14,17 @@ const newUserValidate = async ({ name, email, password, confirmPassword }) => {
 
   return error
 }
+const modifyUserValidate = async ({ name, email, password, confirmPassword }) => {
+  const error = []
 
+  if (isEmpty(name)) error.push({ msg: 'name must not be empty' })
+  if (!isEmail(email)) error.push({ msg: 'email address incorrect' })
+  if (isEmpty(password)) error.push({ msg: 'password must not be empty' })
+  if (isEmpty(password) || !equals(password, confirmPassword))
+    error.push({ msg: ' password must match confirm password' })
+
+  return error
+}
 const loginValidate = async ({ email, password }) => {
   const errors = []
 
@@ -24,4 +34,4 @@ const loginValidate = async ({ email, password }) => {
   return errors
 }
 
-module.exports = { newUserValidate, loginValidate }
+module.exports = { newUserValidate, loginValidate, modifyUserValidate }

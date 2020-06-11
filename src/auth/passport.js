@@ -1,18 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy
 let User = require('../models/user')
 
-// Since we are using the passport.authenticate() method, we should be redirected no matter what
-// app.post(
-//   '/login',
-//   passport.authenticate('local', {
-//     failureRedirect: '/login-failure',
-//     successRedirect: 'login-success',
-//   }),
-//   (err, req, res, next) => {
-//     if (err) next(err)
-//   }
-// )
-
 const findUserByEmailAndPassword = async (email, password, done) => {
   try {
     const user = await User.findOne({ email })
@@ -47,9 +35,9 @@ const ensureAuthenticated = (req, res, next) => {
   req.flash('error_msg', 'Please log in to view that resource')
   res.redirect('/login')
 }
+
 const forwardAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) return next()
-
   res.redirect('/')
 }
 

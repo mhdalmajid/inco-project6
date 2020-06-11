@@ -10,6 +10,7 @@ const { admin, approve } = require('./admin')
 const commentPost = require('./comment')
 const rate = require('./rate')
 const userProfile = require('./userProfile')
+const { modifyUser, modifyUserPost } = require('./modifyUser')
 
 const router = express.Router()
 
@@ -26,6 +27,9 @@ router.get('/profile/:id', userProfile)
 router.post('/comment', ensureAuthenticated, commentPost)
 
 router.post('/rate', ensureAuthenticated, rate)
+
+router.get('/modifyUser/', ensureAuthenticated, modifyUser)
+router.post('/modifyUser', ensureAuthenticated, modifyUserPost)
 
 /** **************************************************************
  *****************************************************************

@@ -2,10 +2,11 @@ const RateModal = require('../models/rate')
 
 const rate = async (req, res) => {
   const { userId, locationId } = req.body
-  const location = await RateModal.findOne({ userId, locationId })
-  if (location) {
-    const update = await RateModal.updateOne({ userId, locationId }, { rate: !location.rate })
-    return res.send(update)
+  const rateRaw = await RateModal.findOne({ userId, locationId })
+
+  if (rateRaw) {
+    const removed = await RateModal.deleteOne({ userId, locationId }, { rate: !rateRaw.rate })
+    return res.send(removed)
   }
   const newRate = new RateModal({ userId, locationId, rate: true })
   const save = await newRate.save()
