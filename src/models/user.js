@@ -16,6 +16,7 @@ const userSchema = new Schema(
 
 userSchema.pre('save', async function () {
   if (this.isModified('password')) this.password = await hash(this.password, 12)
+  console.log(this.password)
 })
 
 userSchema.methods.matchesPassword = function (password) {

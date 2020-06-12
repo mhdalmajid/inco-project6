@@ -2,7 +2,7 @@ const { Schema, model, Types } = require('mongoose')
 
 const RateSchema = new Schema({
   userId: { type: Types.ObjectId, ref: 'User' },
-  locationId: { type: Types.ObjectId, ref: 'Location' },
+  locationId: { type: Types.ObjectId },
   rate: { type: Boolean },
 })
 
